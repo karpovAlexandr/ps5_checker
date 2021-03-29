@@ -5,9 +5,8 @@ from settings.settings import SHOPS
 class SearchEngine:
     shops_base = SHOPS
 
-    def __init__(self, telegram=True, email=True, tests_on=True, sleep=60):
+    def __init__(self, telegram=True, tests_on=True, sleep=60):
         self.telegram = telegram
-        self.email = email
         self.tests_on = tests_on
         self.sleep = sleep
 
@@ -16,7 +15,6 @@ class SearchEngine:
             shop_page = PageObject(
                 name=shop[0],
                 telegram=self.telegram,
-                email=self.email,
                 tests_on=self.tests_on,
                 **shop[1]
             )

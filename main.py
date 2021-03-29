@@ -21,7 +21,6 @@ if __name__ == '__main__':
 
         ps5 = SearchEngine(
             telegram=True,
-            email=True,
             tests_on=True,
             sleep=60
         )

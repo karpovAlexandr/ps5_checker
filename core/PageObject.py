@@ -4,36 +4,6 @@ from telebot import TeleBot
 
 from bot.telegramBot import subscription_info
 from settings.settings import HEADERS
-from settings.settings import SERVER, PORT
-from emailer.Emailer import Emailer
-
-try:
-    from settings.sensitive_data import EMAIL, TO
-
-    login = EMAIL.get('login')
-    password = EMAIL.get('password')
-
-except ImportError:
-    print(
-        'you should create file "sensitive_data.py"\n'
-        'at directory: "APP_PATH/settings/" where\n'
-        'EMAIL - dict with keys:\n'
-        'login - your yandex email login (not email)\n'
-        'password  - your password\n'
-        'you also can edit APP_PATH/emailer/Emailer.py for your needs'
-    )
-    EMAIL = {}
-    login = ''
-    password = ''
-    TO = ''
-    exit()
-
-emailer = Emailer(
-    email_server=SERVER,
-    port=PORT,
-    login=login,
-    password=password
-)
 
 
 class PageObject:
@@ -60,10 +30,6 @@ class PageObject:
         return f'There is no  PS5 in {self.name}'
 
     @staticmethod
-    def send_mail(msg):
-        emailer.send_email(to=TO, text=msg)
-
-    @staticmethod
     def send_bot_message(msg):
         app = TeleBot(__name__)
         subscription_info(app, msg)
@@ -77,10 +43,7 @@ class PageObject:
             if button:
                 msg = self.get_success_message(url)
                 if not test_run:
-                    if self.email:
-                        self.send_mail(msg)
-                    if self.telegram:
-                        self.send_bot_message(msg)
+                    self.send_bot_message(msg)
                 return True, True
             else:
                 msg = self.get_failure_message()
@@ -102,4 +65,4 @@ class PageObject:
 
 
 if __name__ == '__main__':
-    emailer.send_email(to=TO, text='test')
+    pass
